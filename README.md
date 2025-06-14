@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/ishtiaqhimel/cms/workflows/CMS%20CI/badge.svg)](https://github.com/ishtiaqhimel/cms/actions?workflow=CMS%20CI)
+
 ## News Portal CMS
 
 To deliver a fully functional content management backend that enables 
@@ -8,6 +10,27 @@ journalists and editors to create, manage, and publish news articles.
 ## Detailed Features
 
 --TODO--
+
+---
+
+## How to Run Locally
+
+To run this project locally, make sure you have the following installed on your machine:
+- [Git](https://git-scm.com/)
+- [Docker](https://www.docker.com/) (make sure you have `docker compose`)
+
+### Steps
+
+1. Clone the repository:
+```bash
+git clone git@github.com:ishtiaqhimel/cms.git
+cd cms
+```
+
+2. Start the application:
+```bash
+make serve
+```
 
 ---
 
