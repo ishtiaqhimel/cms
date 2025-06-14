@@ -1,0 +1,25 @@
+#!/bin/sh
+
+echo "🔧 Running git pre-commit hook..."
+
+# Run go fmt on all files
+echo "🧹 Running go fmt..."
+make fmt
+
+# Run go vet and capture error if any
+echo "🔍 Running go vet..."
+if ! make vet; then
+  echo "❌ go vet failed. Commit aborted."
+  exit 1
+fi
+
+# Get the list of modified and added Go files that are staged
+files=$(git diff --cached --name-only --diff-filter=ACM | grep '\.go$')
+
+# Stage the formatted files (if any)
+if [ -n "$files" ]; then
+  echo "📦 Re-staging formatted files..."
+  echo "$files" | xargs git add
+fi
+
+echo "✅ Pre-commit checks passed."

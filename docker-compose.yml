@@ -1,0 +1,60 @@
+# common build setup for 'server'
+x-common-build: &common-build
+  build:
+    context: .
+    dockerfile: dev.Dockerfile
+  volumes: # needed for CompileDaemon to detect file changes
+    - ./:/app
+    - cms_temp:/tmp/files/
+  environment:
+    - CONSUL_URL=cms_consul:8500
+    - CONSUL_PATH=news-portal/cms
+    - CONSUL_HTTP_TOKEN=cms
+    - NEW_RELIC_ON=0
+  depends_on:
+    - consul
+    - minio
+
+services:
+  api:
+    <<: *common-build
+    container_name: cms_api
+    command: ["--command=./cms serve"]
+    ports:
+      - "8000:8000"
+
+  db_primary:
+    container_name: cms_postgres_primary
+    image: postgres:17.5
+    command: ["postgres", "-c", "log_statement=all"]
+    ports:
+      - "5423:5432"
+    environment:
+      - POSTGRES_USER=cms
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=cms
+    volumes:
+      - pgcmsdata:/var/lib/postgresql/data
+
+  consul:
+    container_name: cms_consul
+    image: consul:1.15.4
+    ports:
+      - "8500:8500"
+
+  minio:
+    container_name: cms_minio
+    image: minio/minio:RELEASE.2025-04-08T15-41-24Z
+    volumes:
+      - cms_minio_data:/data
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+    command: server /data
+
+volumes:
+  pgcmsdata:
+  cms_minio_data:
+  cms_temp:

@@ -1,0 +1,43 @@
+app:
+  port: 8000
+  read_timeout: 30
+  write_timeout: 30
+  idle_timeout: 30
+  warn_limit: 3
+  bulk_limit: 500
+  request_body_limit: "20M"
+  file_write_dir: /tmp/files/
+  disable_500_err_msg_in_response: false
+  max_page_size: 100
+  default_page_size: 50
+  max_file_size_in_bytes: 524288000 # 500mb
+  max_image_file_size_in_bytes: 10000000 # 10mb
+
+database:
+  primary:
+    host: db_primary
+    port: 5432
+  secondary:
+    host: db_primary
+    port: 5432
+  name: cms
+  username: cms
+  password: pass
+  ssl_mode: disable
+  debug: true
+  max_open_conn: 3
+  max_idle_conn: 2
+  max_life_time: 10s
+  # size of the db insert batches
+  insert_batch_size: 50
+  max_batch_size: 500
+
+minio:
+  url: cms_minio:9000
+  access_key: minio
+  secret_key: minio123
+  secure: false
+  region: us-east-1
+  bucket: cms
+  expires: 168h
+
