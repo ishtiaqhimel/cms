@@ -3,7 +3,7 @@ PKG_LIST := $(shell go list ${PROJECT_NAME}/... | grep -v /vendor/)
 
 GO_PKG := github.com/ishtiaqhimel/news-portal/cms
 
-.PHONY: help git-hook fmt vet lint swagger dep clean test
+.PHONY: help git-hook fmt vet lint dep clean test
 
 help: ## Display this help screen
 	@grep -h -E '^[a-zA-Z0-9-]+%?:.*#' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -35,7 +35,12 @@ lint: fmt vet ## Run go linter against code
 ### DEVELOP and TEST ###
 ########################
 
-dep%: git-hook ## Run dependent container(s) along with configuring consul based on the pattern matching passed with target
+dep%: ## Run dependent container(s) along with configuring consul based on the pattern matching passed with target
+	# check if git is available
+	@if command -v git >/dev/null 2>&1; then \
+		$(MAKE) git-hook; \
+	fi
+
 	# booting up dependency containers
 	@docker-compose up -d consul
 
