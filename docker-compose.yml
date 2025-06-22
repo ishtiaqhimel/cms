@@ -28,7 +28,7 @@ services:
     image: postgres:17.5
     command: ["postgres", "-c", "log_statement=all"]
     ports:
-      - "5423:5432"
+      - "5432:5432"
     environment:
       - POSTGRES_USER=cms
       - POSTGRES_PASSWORD=pass

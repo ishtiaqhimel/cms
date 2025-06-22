@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"github.com/ishtiaqhimel/news-portal/cms/internal/model"
+	"github.com/ishtiaqhimel/news-portal/cms/internal/system/model"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/system/repository"
 )
 
