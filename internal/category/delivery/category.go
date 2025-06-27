@@ -9,13 +9,13 @@ import (
 	"github.com/ishtiaqhimel/news-portal/cms/internal/response"
 )
 
-// CategoryHandler represents the httpHandler for category
-type CategoryHandler struct {
+// categoryHandler represents the httpHandler for category
+type categoryHandler struct {
 	Usecase usecase.CategoryUsecase
 }
 
 func NewCategoryHandler(e *echo.Echo, usecase usecase.CategoryUsecase) {
-	handler := &CategoryHandler{
+	handler := &categoryHandler{
 		Usecase: usecase,
 	}
 
@@ -24,7 +24,7 @@ func NewCategoryHandler(e *echo.Echo, usecase usecase.CategoryUsecase) {
 	categoryV1.POST("/category", handler.CreateCategory)
 }
 
-func (h *CategoryHandler) CreateCategory(c echo.Context) error {
+func (h *categoryHandler) CreateCategory(c echo.Context) error {
 	req := new(model.CategoryCreateReq)
 
 	if err := c.Bind(req); err != nil {

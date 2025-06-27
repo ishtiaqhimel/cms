@@ -10,6 +10,15 @@ func ToP[T comparable](p T) *T {
 	return &p
 }
 
+func ValueInSlice[T comparable](p T, slice []T) bool {
+	for _, v := range slice {
+		if v == p {
+			return true
+		}
+	}
+	return false
+}
+
 var (
 	// Compile regexes once to avoid recompilation on every call
 	reInvalidChars = regexp.MustCompile(`[^\p{L}\p{M}\p{N}\s-]+`)

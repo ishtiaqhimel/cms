@@ -9,14 +9,14 @@ import (
 	"github.com/ishtiaqhimel/news-portal/cms/internal/system/usecase"
 )
 
-// SystemHandler represents the httpHandler for system
-type SystemHandler struct {
+// systemHandler represents the httpHandler for system
+type systemHandler struct {
 	Usecase usecase.SystemUsecase
 }
 
 // NewSystemHandler will initialize the system endpoint
 func NewSystemHandler(e *echo.Echo, us usecase.SystemUsecase) {
-	handler := &SystemHandler{
+	handler := &systemHandler{
 		Usecase: us,
 	}
 
@@ -26,12 +26,12 @@ func NewSystemHandler(e *echo.Echo, us usecase.SystemUsecase) {
 }
 
 // Root will let you see what you can slash 🐲
-func (sh *SystemHandler) Root(c echo.Context) error {
+func (sh *systemHandler) Root(c echo.Context) error {
 	return c.JSON(response.RespondSuccess("Hello there, I'm News Portal CMS!!!", nil))
 }
 
 // Health will let you know the heart beats ❤️
-func (sh *SystemHandler) Health(c echo.Context) error {
+func (sh *systemHandler) Health(c echo.Context) error {
 	resp, err := sh.Usecase.GetHealth()
 	if err != nil {
 		return c.JSON(response.RespondError(err))
@@ -40,7 +40,7 @@ func (sh *SystemHandler) Health(c echo.Context) error {
 }
 
 // ServerTime will let you know the current time on server ⏰
-func (sh *SystemHandler) ServerTime(c echo.Context) error {
+func (sh *systemHandler) ServerTime(c echo.Context) error {
 	resp := sh.Usecase.GetTime()
 	return c.JSON(http.StatusOK, resp)
 }

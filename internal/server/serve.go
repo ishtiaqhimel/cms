@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
 
@@ -21,7 +20,10 @@ import (
 	systemDelivery "github.com/ishtiaqhimel/news-portal/cms/internal/system/delivery"
 	systemRepository "github.com/ishtiaqhimel/news-portal/cms/internal/system/repository"
 	systemUsecase "github.com/ishtiaqhimel/news-portal/cms/internal/system/usecase"
-	"github.com/ishtiaqhimel/news-portal/cms/internal/utils"
+	userDelivery "github.com/ishtiaqhimel/news-portal/cms/internal/user/delivery"
+	userRepository "github.com/ishtiaqhimel/news-portal/cms/internal/user/repository"
+	userUsecase "github.com/ishtiaqhimel/news-portal/cms/internal/user/usecase"
+	"github.com/ishtiaqhimel/news-portal/cms/internal/validator"
 )
 
 func Serve(stopCh <-chan struct{}) error {
@@ -33,25 +35,26 @@ func Serve(stopCh <-chan struct{}) error {
 
 	// http server setup
 	e := echo.New()
-	e.Validator = &utils.CustomValidator{
-		Validator: validator.New(validator.WithRequiredStructEnabled()),
-	}
+	e.Validator = validator.New()
 	middlewares.Attach(e)
 
 	// repository
 	sysRepo := systemRepository.NewSystemRepository(pgClient)
 	articleRepo := articleRepository.NewArticleRepository(pgClient)
 	categoryRepo := categoryRepository.NewCategoryRepository(pgClient)
+	userRepo := userRepository.NewUserRepository(pgClient)
 
 	// usecase
 	sysUsecase := systemUsecase.NewSystemUsecase(sysRepo)
 	articleUC := articleUsecase.NewArticleUsecase(articleRepo)
 	categoryUC := categoryUsecase.NewCategoryUsecase(categoryRepo)
+	userUC := userUsecase.NewUserUsecase(userRepo)
 
 	// delivery
 	systemDelivery.NewSystemHandler(e, sysUsecase)
 	articleDelivery.NewArticleHandler(e, articleUC)
 	categoryDelivery.NewCategoryHandler(e, categoryUC)
+	userDelivery.NewUserHandler(e, userUC)
 
 	// start http server
 	go func() {

@@ -8,13 +8,13 @@ import (
 	"github.com/ishtiaqhimel/news-portal/cms/internal/response"
 )
 
-// ArticleHandler represents the httpHandler for article
-type ArticleHandler struct {
+// articleHandler represents the httpHandler for article
+type articleHandler struct {
 	Usecase usecase.ArticleUsecase
 }
 
 func NewArticleHandler(e *echo.Echo, usecase usecase.ArticleUsecase) {
-	handler := &ArticleHandler{
+	handler := &articleHandler{
 		Usecase: usecase,
 	}
 
@@ -23,7 +23,7 @@ func NewArticleHandler(e *echo.Echo, usecase usecase.ArticleUsecase) {
 	articleV1.POST("/article", handler.CreateArticle)
 }
 
-func (h *ArticleHandler) CreateArticle(c echo.Context) error {
+func (h *articleHandler) CreateArticle(c echo.Context) error {
 	req := new(model.ArticleCreateReq)
 
 	if err := c.Bind(req); err != nil {
