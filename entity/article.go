@@ -14,7 +14,7 @@ const (
 )
 
 func (r *ArticleStatus) Scan(value interface{}) error {
-	*r = ArticleStatus(value.([]byte))
+	*r = ArticleStatus(value.(string))
 	return nil
 }
 

@@ -14,8 +14,8 @@ const (
 	UserRoleReader   UserRole = "reader"
 )
 
-func (r *UserRole) Scan(value interface{}) error {
-	*r = UserRole(value.([]byte))
+func (r *UserRole) Scan(src interface{}) error {
+	*r = UserRole(src.(string))
 	return nil
 }
 
