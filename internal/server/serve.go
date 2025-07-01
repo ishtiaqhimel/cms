@@ -46,9 +46,9 @@ func Serve(stopCh <-chan struct{}) error {
 
 	// usecase
 	sysUsecase := systemUsecase.NewSystemUsecase(sysRepo)
-	articleUC := articleUsecase.NewArticleUsecase(articleRepo)
 	categoryUC := categoryUsecase.NewCategoryUsecase(categoryRepo)
 	userUC := userUsecase.NewUserUsecase(userRepo)
+	articleUC := articleUsecase.NewArticleUsecase(articleRepo, userUC)
 
 	// delivery
 	systemDelivery.NewSystemHandler(e, sysUsecase)

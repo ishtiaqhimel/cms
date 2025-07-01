@@ -11,6 +11,7 @@ import (
 )
 
 var (
+	ErrUnauthorized        = errors.New("role is unauthorized to perform this action")
 	ErrNotFound            = errors.New("resource not found")
 	ErrInvalidPage         = errors.New("invalid page request")
 	ErrConflict            = errors.New("data conflict or already exist")
@@ -20,6 +21,8 @@ var (
 
 func getStatusCode(err error) int {
 	switch err {
+	case ErrUnauthorized:
+		return http.StatusUnauthorized
 	case ErrNotFound:
 		return http.StatusNotFound
 	case ErrInvalidPage:

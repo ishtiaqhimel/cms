@@ -1,6 +1,7 @@
 package delivery
 
 import (
+	"github.com/ishtiaqhimel/news-portal/cms/internal/middlewares"
 	"github.com/labstack/echo/v4"
 
 	"github.com/ishtiaqhimel/news-portal/cms/internal/article/model"
@@ -20,7 +21,7 @@ func NewArticleHandler(e *echo.Echo, usecase usecase.ArticleUsecase) {
 
 	articleV1 := e.Group("/api/v1")
 
-	articleV1.POST("/article", handler.CreateArticle)
+	articleV1.POST("/article", handler.CreateArticle, middlewares.RoleBasedAccessControl)
 }
 
 func (h *articleHandler) CreateArticle(c echo.Context) error {
@@ -34,7 +35,7 @@ func (h *articleHandler) CreateArticle(c echo.Context) error {
 		return c.JSON(response.RespondError(response.ErrBadRequest, err))
 	}
 
-	articleID, err := h.Usecase.CreateArticle(req)
+	articleID, err := h.Usecase.CreateArticle(c.Request().Context(), req)
 	if err != nil {
 		return c.JSON(response.RespondError(err))
 	}
