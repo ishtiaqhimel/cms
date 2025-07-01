@@ -1,8 +1,10 @@
 package entity
 
 import (
-	"database/sql/driver"
 	"time"
+
+	"database/sql/driver"
+	"gorm.io/gorm"
 )
 
 type UserRole string
@@ -30,7 +32,7 @@ type User struct {
 	Role      UserRole  `gorm:"type:user_role;default:'reader'"`
 	CreatedAt time.Time `gorm:"autoCreateTime"`
 	UpdatedAt time.Time `gorm:"autoUpdateTime"`
-	DeletedAt *time.Time
+	DeletedAt gorm.DeletedAt
 }
 
 func (a User) TableName() string {

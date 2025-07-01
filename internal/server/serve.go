@@ -8,6 +8,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/sirupsen/logrus"
 
+	"github.com/ishtiaqhimel/news-portal/cms/infrastructure/db"
 	articleDelivery "github.com/ishtiaqhimel/news-portal/cms/internal/article/delivery"
 	articleRepository "github.com/ishtiaqhimel/news-portal/cms/internal/article/repository"
 	articleUsecase "github.com/ishtiaqhimel/news-portal/cms/internal/article/usecase"
@@ -15,7 +16,6 @@ import (
 	categoryRepository "github.com/ishtiaqhimel/news-portal/cms/internal/category/repository"
 	categoryUsecase "github.com/ishtiaqhimel/news-portal/cms/internal/category/usecase"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/config"
-	"github.com/ishtiaqhimel/news-portal/cms/internal/db"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/middlewares"
 	systemDelivery "github.com/ishtiaqhimel/news-portal/cms/internal/system/delivery"
 	systemRepository "github.com/ishtiaqhimel/news-portal/cms/internal/system/repository"

@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 
@@ -27,13 +25,9 @@ type CategoryRepository interface {
 
 func (a *categoryRepository) CreateCategory(category *entity.Category) (*model.EntityID, error) {
 	category.ID = uuid.New().String()
-	currTime := time.Now().UTC()
-	category.CreatedAt = currTime
-	category.UpdatedAt = currTime
-
-	err := a.DB.Table(category.TableName()).Create(category).Error
-	if err != nil {
-		return nil, err
+	resp := a.DB.Table(category.TableName()).Create(category)
+	if resp.Error != nil {
+		return nil, resp.Error
 	}
 
 	return &model.EntityID{

@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 
@@ -27,13 +25,9 @@ type ArticleRepository interface {
 
 func (a *articleRepository) CreateArticle(article *entity.Article) (*model.EntityID, error) {
 	article.ID = uuid.New().String()
-	currTime := time.Now().UTC()
-	article.CreatedAt = currTime
-	article.UpdatedAt = currTime
-
-	err := a.DB.Table(article.TableName()).Create(article).Error
-	if err != nil {
-		return nil, err
+	resp := a.DB.Table(article.TableName()).Create(article)
+	if resp.Error != nil {
+		return nil, resp.Error
 	}
 
 	return &model.EntityID{

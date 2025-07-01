@@ -1,6 +1,10 @@
 package entity
 
-import "time"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Category struct {
 	ID          string    `gorm:"type:uuid;primaryKey"`
@@ -11,7 +15,7 @@ type Category struct {
 	IsActive    bool      `gorm:"default:true"`
 	CreatedAt   time.Time `gorm:"autoCreateTime"`
 	UpdatedAt   time.Time `gorm:"autoUpdateTime"`
-	DeletedAt   *time.Time
+	DeletedAt   gorm.DeletedAt
 }
 
 func (a Category) TableName() string {

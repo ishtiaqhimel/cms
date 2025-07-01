@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"database/sql/driver"
+	"gorm.io/gorm"
 )
 
 type ArticleStatus string
@@ -32,7 +33,7 @@ type Article struct {
 	PublishAt  *time.Time
 	CreatedAt  time.Time `gorm:"autoCreateTime"`
 	UpdatedAt  time.Time `gorm:"autoUpdateTime"`
-	DeletedAt  *time.Time
+	DeletedAt  gorm.DeletedAt
 }
 
 func (a Article) TableName() string {

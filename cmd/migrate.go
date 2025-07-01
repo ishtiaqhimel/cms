@@ -1,8 +1,8 @@
 package cmd
 
 import (
+	"github.com/ishtiaqhimel/news-portal/cms/infrastructure/db"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/config"
-	"github.com/ishtiaqhimel/news-portal/cms/internal/db"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 	"os"

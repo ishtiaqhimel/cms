@@ -1,8 +1,6 @@
 package repository
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 	"gorm.io/gorm"
 
@@ -32,13 +30,9 @@ type UserRepository interface {
 
 func (a *userRepository) CreateUser(user *entity.User) (*model.EntityID, error) {
 	user.ID = uuid.New().String()
-	currTime := time.Now().UTC()
-	user.CreatedAt = currTime
-	user.UpdatedAt = currTime
-
-	err := a.DB.Table(user.TableName()).Create(user).Error
-	if err != nil {
-		return nil, err
+	resp := a.DB.Table(user.TableName()).Create(user)
+	if resp.Error != nil {
+		return nil, resp.Error
 	}
 
 	return &model.EntityID{
@@ -47,15 +41,14 @@ func (a *userRepository) CreateUser(user *entity.User) (*model.EntityID, error) 
 }
 
 func (a *userRepository) GetUserByID(id string) (*entity.User, error) {
-	user := &entity.User{}
-	resp := a.DB.Table(user.TableName()).Where("id = ? AND deleted_at IS NULL", id).Find(user)
+	user := &entity.User{ID: id}
+	resp := a.DB.Table(user.TableName()).First(user)
+
 	return user, resp.Error
 }
 
 func (a *userRepository) UpdateUser(user *entity.User, updatedCols []string) error {
-	user.UpdatedAt = time.Now().UTC()
-
-	resp := a.DB.Table(user.TableName()).Where("deleted_at IS NULL").Select(updatedCols).Updates(user)
+	resp := a.DB.Table(user.TableName()).Select(updatedCols).Updates(user)
 
 	return resp.Error
 }
@@ -63,7 +56,7 @@ func (a *userRepository) UpdateUser(user *entity.User, updatedCols []string) err
 func (a *userRepository) ListUserByFilter(filter *UserListFilter, pg *utils.Pagination) ([]*entity.User, int64, error) {
 	users := make([]*entity.User, 0)
 
-	tx := a.DB.Table(entity.User{}.TableName()).Where("deleted_at IS NULL")
+	tx := a.DB.Table(entity.User{}.TableName())
 
 	if filter.ID != nil {
 		tx = tx.Where("id = ?", *filter.ID)
@@ -82,7 +75,7 @@ func (a *userRepository) ListUserByFilter(filter *UserListFilter, pg *utils.Pagi
 	}
 
 	totalRecords := int64(0)
-	if resp := tx.Count(&totalRecords); resp.Error != nil {
+	if resp := tx.Where("deleted_at IS NULL").Count(&totalRecords); resp.Error != nil {
 		return nil, 0, resp.Error
 	}
 
@@ -95,13 +88,7 @@ func (a *userRepository) ListUserByFilter(filter *UserListFilter, pg *utils.Pagi
 }
 
 func (a *userRepository) DeleteUserByID(id string) error {
-	currTime := time.Now().UTC()
-
-	user := &entity.User{
-		ID:        id,
-		DeletedAt: &currTime,
-	}
-	resp := a.DB.Table(user.TableName()).Select("deleted_at").Updates(user)
+	resp := a.DB.Table(entity.User{}.TableName()).Delete(&entity.User{ID: id})
 
 	return resp.Error
 }

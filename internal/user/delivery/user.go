@@ -1,13 +1,13 @@
 package delivery
 
 import (
-	"github.com/ishtiaqhimel/news-portal/cms/internal/config"
-	"github.com/ishtiaqhimel/news-portal/cms/internal/utils"
 	"github.com/labstack/echo/v4"
 
+	"github.com/ishtiaqhimel/news-portal/cms/internal/config"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/response"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/user/model"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/user/usecase"
+	"github.com/ishtiaqhimel/news-portal/cms/internal/utils"
 )
 
 // userHandler represents the httpHandler for user
