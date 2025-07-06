@@ -2,13 +2,13 @@ package usecase
 
 import (
 	"errors"
-	"github.com/ishtiaqhimel/news-portal/cms/internal/utils"
 
 	"gorm.io/gorm"
 
 	"github.com/ishtiaqhimel/news-portal/cms/internal/response"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/user/model"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/user/repository"
+	"github.com/ishtiaqhimel/news-portal/cms/internal/utils"
 )
 
 type userUsecase struct {
