@@ -56,7 +56,7 @@ func (a *userRepository) UpdateUser(user *entity.User, updatedCols []string) err
 func (a *userRepository) ListUserByFilter(filter *UserListFilter, pg *utils.Pagination) ([]*entity.User, int64, error) {
 	users := make([]*entity.User, 0)
 
-	tx := a.DB.Table(entity.User{}.TableName())
+	tx := a.DB.Table(entity.User{}.TableName()).Order("created_at desc")
 
 	if filter.ID != nil {
 		tx = tx.Where("id = ?", *filter.ID)

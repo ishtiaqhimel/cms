@@ -56,7 +56,7 @@ func (a *categoryRepository) UpdateCategory(category *entity.Category, updatedCo
 func (a *categoryRepository) ListCategoryByFilter(filter *CategoryListFilter, pg *utils.Pagination) ([]*entity.Category, int64, error) {
 	categories := make([]*entity.Category, 0)
 
-	tx := a.DB.Table(entity.Category{}.TableName())
+	tx := a.DB.Table(entity.Category{}.TableName()).Order("created_at desc")
 
 	if filter.ID != nil {
 		tx = tx.Where("id = ?", *filter.ID)
