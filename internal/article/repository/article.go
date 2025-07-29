@@ -2,11 +2,11 @@ package repository
 
 import (
 	"github.com/google/uuid"
-	"github.com/ishtiaqhimel/news-portal/cms/internal/utils"
 	"gorm.io/gorm"
 
 	"github.com/ishtiaqhimel/news-portal/cms/entity"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/article/model"
+	"github.com/ishtiaqhimel/news-portal/cms/internal/utils"
 )
 
 type articleRepository struct {

@@ -1,14 +1,14 @@
 package delivery
 
 import (
-	"github.com/ishtiaqhimel/news-portal/cms/internal/config"
-	"github.com/ishtiaqhimel/news-portal/cms/internal/utils"
 	"github.com/labstack/echo/v4"
 
 	"github.com/ishtiaqhimel/news-portal/cms/internal/article/model"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/article/usecase"
+	"github.com/ishtiaqhimel/news-portal/cms/internal/config"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/middlewares"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/response"
+	"github.com/ishtiaqhimel/news-portal/cms/internal/utils"
 )
 
 // articleHandler represents the httpHandler for article

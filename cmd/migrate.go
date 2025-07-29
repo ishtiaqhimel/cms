@@ -1,11 +1,13 @@
 package cmd
 
 import (
-	"github.com/ishtiaqhimel/news-portal/cms/infrastructure/db"
-	"github.com/ishtiaqhimel/news-portal/cms/internal/config"
+	"os"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
-	"os"
+
+	"github.com/ishtiaqhimel/news-portal/cms/infrastructure/db"
+	"github.com/ishtiaqhimel/news-portal/cms/internal/config"
 )
 
 var (

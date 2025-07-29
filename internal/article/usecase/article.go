@@ -3,12 +3,14 @@ package usecase
 import (
 	"context"
 	"errors"
+
+	"gorm.io/gorm"
+
 	"github.com/ishtiaqhimel/news-portal/cms/internal/article/model"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/article/repository"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/response"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/user/usecase"
 	"github.com/ishtiaqhimel/news-portal/cms/internal/utils"
-	"gorm.io/gorm"
 )
 
 type articleUsecase struct {
